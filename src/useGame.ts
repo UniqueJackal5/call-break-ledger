@@ -81,16 +81,33 @@ export const useGame = () => {
       nextPlayerIndex = 0;
       if (inputPhase === 'CALL') {
         const totalCalls = playerScores.reduce((sum, ps) => sum + (ps.call || 0), 0);
-        if (totalCalls > 13) {
-          // Re-collect calls if > 13
-          alert(`Total calls (${totalCalls}) cannot exceed 13. Please re-enter calls.`);
-          playerScores.forEach(ps => { ps.call = null; ps.score = null; });
-          nextPhase = 'CALL';
+        if (totalCalls < 8) {
+          // Rule: If sum < 8, round ended and give them the points they called
+          alert(`Total calls (${totalCalls}) is less than 8. Round ended. Players awarded their calls.`);
+          playerScores.forEach(ps => {
+            if (ps.call !== null) {
+              ps.actual = ps.call;
+              ps.score = ps.call * 10;
+            }
+          });
+          nextPhase = 'NONE';
         } else {
+          // No restriction on 13
           nextPhase = 'ACTUAL';
         }
-      } else {
-        nextPhase = 'NONE';
+      } else if (inputPhase === 'ACTUAL') {
+        const totalActual = playerScores.reduce((sum, ps) => sum + (ps.actual || 0), 0);
+        if (totalActual !== 13) {
+          alert(`Total tricks (${totalActual}) must be exactly 13. Please re-enter tricks for this round.`);
+          playerScores.forEach(ps => {
+            ps.actual = null;
+            ps.score = null;
+          });
+          nextPhase = 'ACTUAL';
+          nextPlayerIndex = 0;
+        } else {
+          nextPhase = 'NONE';
+        }
       }
     }
 
