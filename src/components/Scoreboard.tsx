@@ -9,11 +9,10 @@ interface ScoreboardProps {
   onSubmitInput: (value: number) => void;
   onNextRound: () => void;
   onReset: () => void;
-  onEditRound: (roundNumber: number) => void;
   onJumpToInput: (roundNumber: number, playerIndex: number, phase: 'CALL' | 'ACTUAL') => void;
 }
 
-const Scoreboard: React.FC<ScoreboardProps> = ({ gameState, onSubmitInput, onNextRound, onReset, onEditRound, onJumpToInput }) => {
+const Scoreboard: React.FC<ScoreboardProps> = ({ gameState, onSubmitInput, onNextRound, onReset, onJumpToInput }) => {
   const { players, rounds, currentRound, inputPhase, currentPlayerIndex, isTotalRevealed } = gameState;
 
   const playerTotals = players.map((_, i) => {

@@ -137,16 +137,6 @@ export const useGame = () => {
     setGameState(null);
   };
 
-  const editRound = (roundNumber: number) => {
-    if (!gameState) return;
-    setGameState({
-      ...gameState,
-      currentRound: roundNumber,
-      inputPhase: 'CALL',
-      currentPlayerIndex: 0,
-    });
-  };
-
   const jumpToInput = (roundNumber: number, playerIndex: number, phase: 'CALL' | 'ACTUAL') => {
     if (!gameState) return;
     setGameState({
@@ -163,7 +153,6 @@ export const useGame = () => {
     submitInput,
     nextRound,
     resetGame,
-    editRound,
     jumpToInput,
   };
 };
