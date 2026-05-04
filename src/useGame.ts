@@ -147,6 +147,16 @@ export const useGame = () => {
     });
   };
 
+  const jumpToInput = (roundNumber: number, playerIndex: number, phase: 'CALL' | 'ACTUAL') => {
+    if (!gameState) return;
+    setGameState({
+      ...gameState,
+      currentRound: roundNumber,
+      currentPlayerIndex: playerIndex,
+      inputPhase: phase,
+    });
+  };
+
   return {
     gameState,
     startGame,
@@ -154,5 +164,6 @@ export const useGame = () => {
     nextRound,
     resetGame,
     editRound,
+    jumpToInput,
   };
 };

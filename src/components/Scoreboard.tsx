@@ -10,9 +10,10 @@ interface ScoreboardProps {
   onNextRound: () => void;
   onReset: () => void;
   onEditRound: (roundNumber: number) => void;
+  onJumpToInput: (roundNumber: number, playerIndex: number, phase: 'CALL' | 'ACTUAL') => void;
 }
 
-const Scoreboard: React.FC<ScoreboardProps> = ({ gameState, onSubmitInput, onNextRound, onReset, onEditRound }) => {
+const Scoreboard: React.FC<ScoreboardProps> = ({ gameState, onSubmitInput, onNextRound, onReset, onEditRound, onJumpToInput }) => {
   const { players, rounds, currentRound, inputPhase, currentPlayerIndex, isTotalRevealed } = gameState;
 
   const playerTotals = players.map((_, i) => {
@@ -43,7 +44,7 @@ const Scoreboard: React.FC<ScoreboardProps> = ({ gameState, onSubmitInput, onNex
           <div className="flex flex-col">
              <h1 className="text-2xl font-black uppercase tracking-tighter text-gray-900 leading-none">Call Break Ledger</h1>
              <p className="text-[10px] text-gray-500 font-bold uppercase mt-2">
-               {isGameFinished ? 'Game Over' : `Round ${currentRound} in progress`} • Tap row to edit
+               {isGameFinished ? 'Game Over' : `Round ${currentRound} in progress`} • Tap cell to edit
              </p>
           </div>
           <button
@@ -83,7 +84,8 @@ const Scoreboard: React.FC<ScoreboardProps> = ({ gameState, onSubmitInput, onNex
                   key={i}
                   round={r}
                   isCurrent={currentRound === r.roundNumber}
-                  onEdit={() => onEditRound(r.roundNumber)}
+                  currentPhase={inputPhase}
+                  onJumpToInput={onJumpToInput}
                 />
               ))}
             </tbody>

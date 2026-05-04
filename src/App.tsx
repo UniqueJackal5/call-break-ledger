@@ -3,7 +3,7 @@ import Scoreboard from './components/Scoreboard';
 import { useGame } from './useGame';
 
 function App() {
-  const { gameState, startGame, submitInput, nextRound, resetGame, editRound } = useGame();
+  const { gameState, startGame, submitInput, nextRound, resetGame, editRound, jumpToInput } = useGame();
 
   if (!gameState) {
     return <Setup onStart={startGame} />;
@@ -16,6 +16,7 @@ function App() {
       onNextRound={nextRound}
       onReset={resetGame}
       onEditRound={editRound}
+      onJumpToInput={jumpToInput}
     />
   );
 }
